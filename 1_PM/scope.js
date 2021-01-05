@@ -16,7 +16,7 @@ const x = () => {
 }
 
 const y = () => {
-  var a = 2;
+  a = 2;
   console.log(a);
   x();
 }

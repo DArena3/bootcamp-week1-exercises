@@ -135,7 +135,7 @@ console.log(collegeLookup('Charles'))
 console.log(collegeLookup('Daniela'))
 
 // define oppositesAttract as a list of friend objects whose favorite pets are different.
-const oppositesAttract = () => {
+const oppositesAttractHelper = () => {
   let resultSet = []
   database.friends.forEach(f => {
     let pet1, pet2
@@ -149,12 +149,40 @@ const oppositesAttract = () => {
 
   return resultSet
 }
-console.log(oppositesAttract())
+const oppositesAttract = oppositesAttractHelper()
+console.log(oppositesAttract)
 
 // define local as a list of users who live in the same state as they go to school.
-//const local = _______
-//console.log(local)
+const localHelper = () => {
+  let resultSet = []
+  database.users.forEach(user => {
+    let {state, collegeId} = user
+    database.college.forEach(college => {
+      if (college.id === collegeId && college.state === state) resultSet.push(user)
+    })
+  })
+
+  return resultSet
+}
+
+const local = localHelper()
+console.log(local)
 
 // define collegeFriends as a list of friend objects that go to the same college
-//const collegeFriends = _______
-//console.log(collegeFriends)
+const collegeFriendsHelper = () => {
+  let resultSet = []
+  database.friends.forEach(f => {
+    let college1, college2
+    const {id1, id2} = f
+    database.users.forEach(user => {
+      if (user.id === id1) college1 = user.collegeId
+      else if (user.id === id2) college2 = user.collegeId
+    })
+    if (college1 === college2) resultSet.push(f)
+  })
+
+  return resultSet
+}
+
+const collegeFriends = collegeFriendsHelper()
+console.log(collegeFriends)
